@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.EventImagePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="EventImagePage"
+    BackgroundColor="{StaticResource DarkViolet}">
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+            <CollectionView
+                ItemsSource="{Binding Images}"
+                SelectionChanged="OnImageClicked"
+                SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="5"
+                        Orientation="Vertical"
+                        Span="2"
+                        VerticalItemSpacing="20" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Padding="10"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20">
+                            <Border.Shadow>
+                                <Shadow
+                                    Brush="AntiqueWhite"
+                                    Opacity="0.8"
+                                    Radius="30" />
+                            </Border.Shadow>
+                            <Image
+                                Aspect="AspectFill"
+                                HeightRequest="200"
+                                Source="{Binding}"
+                                WidthRequest="200" />
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

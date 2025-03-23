@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EventPlannerApp.Presentation.SignupPage"
+             Title="Konto anlegen"
+                Shell.ForegroundColor="Black"
+                Shell.TitleColor="DarkGreen"
+                Shell.NavBarIsVisible="True"
+                Shell.BackgroundColor="{StaticResource MyTeal}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Border">
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="AntiqueWhite"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Offset="0.5" Color="#113826" />
+            <GradientStop Offset="1.0" Color="#006600" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Image
+            Grid.Row="0"
+            Source="logo.png"
+            VerticalOptions="Center"
+            HorizontalOptions="End"
+            HeightRequest="80"
+            WidthRequest="150"
+            Margin="20,20"/>
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            VerticalOptions="Center"
+            Margin="25,40,25,30"
+            Spacing="10">
+            <Grid HorizontalOptions="Center" VerticalOptions="Center" ToolTipProperties.Text="Profilebild auswählen">
+                <Border
+                    StrokeShape="RoundRectangle 50">
+                    <Image
+                        x:Name="ProfileImage"
+                        Source="profile_placeholder.png"
+                        HeightRequest="100"
+                        WidthRequest="100"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Aspect="AspectFill">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnProfileImageTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Border>
+
+                <!-- Plus Sign Image -->
+                <Label
+                    Text="+"
+                    FontSize="34"
+                    FontAttributes="Bold"
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnProfileImageTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+            <Label
+                Text="Neues Konto anlegen"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                FontAttributes="Bold"
+                FontSize="24"
+                Margin="25"
+                TextColor="AntiqueWhite"/>
+            <Border
+                StrokeShape="RoundRectangle 10" Stroke="Transparent"
+                MaximumWidthRequest="300"
+                Margin="0,10">
+                <Entry x:Name="UsernameEntry" Placeholder="Benutzername" 
+                    BackgroundColor="ForestGreen"/>
+            </Border>
+            <Border
+                StrokeShape="RoundRectangle 10" Stroke="Transparent"
+                MaximumWidthRequest="300">
+                            <Entry x:Name="PasswordEntry" 
+                       Placeholder="Passwort"
+                       BackgroundColor="ForestGreen"/>
+            </Border>
+            <Border
+                StrokeShape="RoundRectangle 10" Stroke="Transparent"
+                MaximumWidthRequest="300">
+                <Entry x:Name="ConfirmPasswordEntry" 
+                       Placeholder="Passwort bestätigen"
+                       BackgroundColor="ForestGreen"/>
+            </Border>
+            <Border
+                StrokeShape="RoundRectangle 10" Stroke="Transparent"
+                MaximumWidthRequest="300"
+                Margin="0,10">
+                <Entry x:Name="EmailEntry" 
+                   Placeholder="E-Mail (Optional)" 
+                   BackgroundColor="ForestGreen"/>
+                    </Border>
+            <Button Text="Anlegen" Clicked="OnSignupClicked" FontSize="16" FontAttributes="Bold"
+                    MaximumWidthRequest="200"
+                    BackgroundColor="YellowGreen"
+                    Margin="25"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

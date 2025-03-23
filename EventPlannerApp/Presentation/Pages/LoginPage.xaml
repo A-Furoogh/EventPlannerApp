@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Einlogen"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Offset="0.5" Color="#113826" />
+            <GradientStop Offset="1.0" Color="#006600" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid>
+        <VerticalStackLayout Margin="25,125,25,25">
+            <Image
+                Margin="20,20"
+                Aspect="AspectFit"
+                HeightRequest="200"
+                HorizontalOptions="Center"
+                Source="logo.png"
+                VerticalOptions="Center"
+                WidthRequest="300" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="28"
+                HorizontalOptions="Center"
+                Text="Anmelden"
+                TextColor="DarkKhaki"
+                VerticalOptions="Center" />
+            <VerticalStackLayout Margin="20,10" Spacing="20">
+                <Border BackgroundColor="ForestGreen" StrokeShape="RoundRectangle 10">
+                    <Border.Shadow>
+                        <Shadow Brush="AntiqueWhite" Radius="20" />
+                    </Border.Shadow>
+                    <Entry
+                        x:Name="UsernameEntry"
+                        MaximumWidthRequest="300"
+                        Placeholder="Benutzername" />
+                </Border>
+
+                <Border BackgroundColor="ForestGreen" StrokeShape="RoundRectangle 10">
+                    <Border.Shadow>
+                        <Shadow Brush="AntiqueWhite" Radius="20" />
+                    </Border.Shadow>
+                    <Entry
+                        x:Name="PasswordEntry"
+                        IsPassword="True"
+                        MaximumWidthRequest="300"
+                        Placeholder="Password" />
+                </Border>
+                <Button
+                    BackgroundColor="YellowGreen"
+                    Clicked="OnLoginClicked"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    MaximumWidthRequest="230"
+                    Text="Anmelden">
+                    <Button.Shadow>
+                        <Shadow Brush="AntiqueWhite" Radius="10" />
+                    </Button.Shadow>
+                </Button>
+                <Button
+                    BackgroundColor="DarkOrange"
+                    Clicked="OnGotoSignupClicked"
+                    FontAttributes="None"
+                    FontSize="14"
+                    MaximumHeightRequest="40"
+                    MaximumWidthRequest="150"
+                    Text="Konto anlegen +" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <ActivityIndicator
+            x:Name="LoginActivityIndicator"
+            BackgroundColor="Transparent"
+            HeightRequest="80"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            WidthRequest="80"
+            Color="DarkOrange" />
+    </Grid>
+</ContentPage>

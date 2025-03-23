@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.AddEventPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="AddEventPage">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+            <GradientStop Offset="0.5" Color="#660066" />
+            <GradientStop Offset="1.0" Color="#cc0099" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="AntiqueWhite" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid Margin="5,15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="30,0" Spacing="25">
+                <ImageButton
+                    x:Name="EventImag"
+                    Clicked="OnChooseImageClicked"
+                    HeightRequest="70"
+                    HorizontalOptions="StartAndExpand"
+                    Source="add_event_image.png"
+                    WidthRequest="70" />
+                <Entry
+                    x:Name="EventNameEntry"
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Placeholder="Event-Bezeichnung" />
+                <Editor
+                    x:Name="EventDescriptionEntry"
+                    AutoSize="TextChanges"
+                    Placeholder="Event Beschreibung" />
+                <Entry x:Name="TagsEntry" Placeholder="Tags z.B:Party,Hochzeit" />
+                <HorizontalStackLayout Spacing="20">
+                    <DatePicker
+                        x:Name="EventDatePicker"
+                        Date="{Binding EventDate}"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        TextColor="AntiqueWhite" />
+                    <TimePicker
+                        x:Name="EventTimePicker"
+                        TextColor="AntiqueWhite"
+                        Time="{Binding EventTime}" />
+                    <HorizontalStackLayout>
+                        <Label Text="EndZeit:" VerticalOptions="Center" />
+                        <TimePicker x:Name="EventEndTimePicker" TextColor="AntiqueWhite" />
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="45">
+                    <HorizontalStackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="Öffentlich:"
+                            VerticalOptions="Center" />
+                        <CheckBox x:Name="IsPublic" />
+                    </HorizontalStackLayout>
+                    <Entry
+                        x:Name="EventLocationEntry"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Placeholder="Event Location" />
+                </HorizontalStackLayout>
+                <Entry
+                    x:Name="MaxParticipantsEntry"
+                    FontAttributes="Bold"
+                    Keyboard="Numeric"
+                    Placeholder="Max.Teilnehmerzahl" />
+
+                <Button
+                    BackgroundColor="{StaticResource MyTeal}"
+                    Clicked="OnAddEventClicked"
+                    FontAttributes="Bold"
+                    FontSize="Body"
+                    Text="Event Hinzufügen" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

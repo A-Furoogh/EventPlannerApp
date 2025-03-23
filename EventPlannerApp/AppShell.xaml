@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="EventPlannerApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:EventPlannerApp.Presentation"
+    xmlns:presentation="clr-namespace:EventPlannerApp.Presentation"
+    xmlns:comboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    Shell.FlyoutBehavior="Disabled">
+    
+    <TabBar x:Name="CustomTabBar">
+            <ShellContent Title="Home"
+                           Icon="home_icon.png"
+                           Route="MainPage"
+                           ContentTemplate="{DataTemplate local:MainPage}" />
+            <ShellContent Title="Chats"
+                           Icon="chat_icon.png"
+                           Route="ChatsPage"
+                           ContentTemplate="{DataTemplate local:ChatsPage}" />
+            <ShellContent Title="My Events"
+                           Icon="my_event_icon.png"
+                           Route="MyEventsPage"
+                           ContentTemplate="{DataTemplate local:MyEventsPage}" />
+        </TabBar>
+    
+    <!--<Shell.TitleView>
+        <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center">
+            <ImageButton
+                x:Name="SettingMenuButton"
+                BackgroundColor="Transparent"
+                Clicked="OnSettingMenuButton_Clicked"
+                HeightRequest="30"
+                Source="settings_icon.png"
+                WidthRequest="30" />
+        </HorizontalStackLayout>
+    </Shell.TitleView>-->
+
+</Shell>

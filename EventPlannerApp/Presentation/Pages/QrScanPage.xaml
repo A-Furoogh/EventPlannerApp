@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EventPlannerApp.Presentation.QrScanPage"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             Title="QrScanPage">
+    
+    <zxing:CameraBarcodeReaderView
+            x:Name="QrCodeScanner"
+            BarcodesDetected="QrCodeScanner_BarcodesDetected"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" 
+            IsDetecting="True" />
+</ContentPage>

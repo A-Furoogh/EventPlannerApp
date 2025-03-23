@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.ChatPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:locale="clr-namespace:EventPlannerApp.Presentation.Helpers"
+    Title="ChatPage"
+    BackgroundColor="#660066">
+
+    <Page.Resources>
+
+        <!--  Sent message DataTemplate (Right Aligned)  -->
+        <DataTemplate x:Key="SentMessageTemplate">
+            <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+                <Border BackgroundColor="AntiqueWhite" Stroke="Transparent">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20" />
+                    </Border.StrokeShape>
+                    <Label
+                        Margin="0,0,10,0"
+                        Padding="10"
+                        BackgroundColor="AntiqueWhite"
+                        FontSize="18"
+                        Text="{Binding Content}"
+                        TextColor="Black" />
+                </Border>
+            </StackLayout>
+        </DataTemplate>
+
+        <!--  Received message DataTemplate (Left Aligned)  -->
+        <DataTemplate x:Key="ReceivedMessageTemplate">
+            <StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+                <Border BackgroundColor="LightGray" Stroke="Transparent">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20" />
+                    </Border.StrokeShape>
+                    <Label
+                        Margin="10,0,0,0"
+                        Padding="10"
+                        BackgroundColor="LightGray"
+                        FontSize="18"
+                        Text="{Binding Content}" />
+                </Border>
+
+            </StackLayout>
+        </DataTemplate>
+
+        <!--  Define a DataTemplateSelector to select the correct DataTemplate based on the Sender of the message  -->
+        <locale:MessageTemplateSelector
+            x:Key="MessageTemplateSelector"
+            IncomingMessageTemplate="{StaticResource ReceivedMessageTemplate}"
+            OutgoingMessageTemplate="{StaticResource SentMessageTemplate}" />
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="90" />
+        </Grid.RowDefinitions>
+        <Frame
+            BackgroundColor="{StaticResource LightViolet3}"
+            BorderColor="Transparent"
+            CornerRadius="14">
+            <HorizontalStackLayout Spacing="15">
+                <Image
+                    Aspect="Fill"
+                    HeightRequest="50"
+                    Source="profile_placeholder.png"
+                    WidthRequest="50" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    Text="{Binding PartnerName}"
+                    TextColor="AntiqueWhite"
+                    VerticalOptions="CenterAndExpand" />
+            </HorizontalStackLayout>
+        </Frame>
+        <Grid Grid.Row="1">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.1" Color="#660066" />
+                    <GradientStop Offset="1.0" Color="#ff99cc" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <CollectionView
+                ItemTemplate="{StaticResource MessageTemplateSelector}"
+                ItemsSource="{Binding Messages}"
+                SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </Grid>
+        <VerticalStackLayout
+            Grid.Row="2"
+            Padding="10"
+            BackgroundColor="{StaticResource LightViolet3}">
+            <BoxView
+                BackgroundColor="LightGray"
+                HeightRequest="1"
+                Opacity="0.2" />
+            <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                <Border
+                    Padding="5"
+                    BackgroundColor="{StaticResource Gray200}"
+                    HeightRequest="70"
+                    StrokeShape="RoundRectangle 20">
+                    <Editor
+                        x:Name="MessageEntry"
+                        AutoSize="TextChanges"
+                        Completed="OnMessageEntered"
+                        HorizontalOptions="Start"
+                        MinimumHeightRequest="80"
+                        MinimumWidthRequest="300"
+                        Placeholder="Nachricht eingeben"
+                        PlaceholderColor="{StaticResource Gray900}"
+                        Text="{Binding NewMessage}"
+                        VerticalTextAlignment="Center"
+                        WidthRequest="300" />
+                </Border>
+                <ImageButton
+                    Margin="10,0,5,0"
+                    BackgroundColor="{StaticResource MyTeal}"
+                    Clicked="OnMessageEntered"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    HorizontalOptions="End"
+                    Source="sending_icon.png"
+                    WidthRequest="70" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

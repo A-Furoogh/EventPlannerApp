@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.EventPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="EventPage">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+            <GradientStop Offset="0.5" Color="#660066" />
+            <GradientStop Offset="1.0" Color="#cc0099" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="AntiqueWhite" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+
+            <Button
+                x:Name="Edit_Button"
+                Padding="0"
+                Clicked="OnEditEventButton_Clicked"
+                FontSize="16"
+                HeightRequest="40"
+                HorizontalOptions="End"
+                IsVisible="False"
+                Text="Bearbeiten"
+                WidthRequest="100" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="30"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Name}" />
+
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="200"
+                Source="{Binding ImageIndex, StringFormat='event{0}.png'}"
+                VerticalOptions="CenterAndExpand"
+                WidthRequest="200">
+                <Image.Shadow>
+                    <Shadow
+                        Brush="Wheat"
+                        Opacity="0.8"
+                        Radius="50"
+                        Offset="8,8" />
+                </Image.Shadow>
+            </Image>
+
+            <Label
+                FontSize="20"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Description}" />
+
+            <Label
+                FontSize="20"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Date}" />
+
+            <Label
+                FontSize="20"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Location}" />
+
+            <HorizontalStackLayout>
+                <Label Text="Erstellt von:" />
+                <Label Text="{Binding OrgranizerId, Converter={StaticResource UserIdsToNamesConverter}}" />
+            </HorizontalStackLayout>
+
+            <Button
+                x:Name="Join_Button"
+                BackgroundColor="{StaticResource SaveButtonColor}"
+                Clicked="OnJoinEventButton_Clicked"
+                Text="Event Beitreten"
+                TextColor="White" />
+
+            <Border
+                Padding="5"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 10">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0.5" Color="#660066" />
+                        <GradientStop Offset="1.0" Color="#ff99cc" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackLayout x:Name="FeedbackSection" Spacing="10">
+                    <Label Text="Bewertung hinterlassen" />
+                    <HorizontalStackLayout x:Name="RatingStars" Spacing="10">
+                        <ImageButton
+                            Clicked="OnStarClicked"
+                            CommandParameter="1"
+                            HeightRequest="30"
+                            Source="star_empty.png"
+                            WidthRequest="30" />
+                        <ImageButton
+                            Clicked="OnStarClicked"
+                            CommandParameter="2"
+                            HeightRequest="30"
+                            Source="star_empty.png"
+                            WidthRequest="30" />
+                        <ImageButton
+                            Clicked="OnStarClicked"
+                            CommandParameter="3"
+                            HeightRequest="30"
+                            Source="star_empty.png"
+                            WidthRequest="30" />
+                        <ImageButton
+                            Clicked="OnStarClicked"
+                            CommandParameter="4"
+                            HeightRequest="30"
+                            Source="star_empty.png"
+                            WidthRequest="30" />
+                        <ImageButton
+                            Clicked="OnStarClicked"
+                            CommandParameter="5"
+                            HeightRequest="30"
+                            Source="star_empty.png"
+                            WidthRequest="30" />
+                    </HorizontalStackLayout>
+
+                    <Entry x:Name="CommentEntry" Placeholder="Kommentar hinterlassen..." />
+
+                    <Button Clicked="OnSubmitFeedbackButton_Clicked" Text="Absenden">
+                        <Button.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Offset="0.1" Color="#003300" />
+                                <GradientStop Offset="1.0" Color="#336600" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </StackLayout>
+            </Border>
+
+            <CollectionView ItemsSource="{Binding Feedbacks.Values}" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 5" StrokeThickness="0.5">
+                            <VerticalStackLayout Padding="10" Spacing="10">
+                                <HorizontalStackLayout Spacing="20">
+                                    <Image
+                                        HeightRequest="20"
+                                        Source="profile_placeholder.png"
+                                        WidthRequest="20" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        Text="{Binding UserId, Converter={StaticResource UserIdsToNamesConverter}}" />
+                                    <Label Text="{Binding Rating, Converter={StaticResource RatingToStarsConverter}}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="Kommentar:" />
+                                    <Label Text="{Binding Comment}" />
+                                </HorizontalStackLayout>
+
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

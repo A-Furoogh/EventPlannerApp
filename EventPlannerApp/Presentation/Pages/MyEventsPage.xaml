@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.MyEventsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:EventPlannerApp"
+    xmlns:scheduler="clr-namespace:Syncfusion.Maui.Scheduler;assembly=Syncfusion.Maui.Scheduler"
+    Title="MyEventsPage"
+    Background="{StaticResource LightViolet2}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="AntiqueWhite" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="20">
+            <Border
+                Grid.Row="1"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 20">
+                <SearchBar
+                    Background="{StaticResource LightViolet3}"
+                    HorizontalOptions="Start"
+                    Placeholder="Meine Events suche ..."
+                    PlaceholderColor="WhiteSmoke"
+                    TextColor="WhiteSmoke"
+                    WidthRequest="250" />
+            </Border>
+            <Button
+                BackgroundColor="{StaticResource MyTeal}"
+                Clicked="OnAnalyticsButton_Clicked"
+                FontAttributes="Bold"
+                FontSize="18"
+                HorizontalOptions="End"
+                Text="Analytik"
+                TextColor="AntiqueWhite"
+                WidthRequest="120" />
+        </HorizontalStackLayout>
+
+        <StackLayout Grid.Row="1">
+            <CollectionView
+                x:Name="EventsCollectionView"
+                HorizontalOptions="FillAndExpand"
+                HorizontalScrollBarVisibility="Never"
+                ItemsSource="{Binding UserEvents}"
+                SelectedItem="OnEventSelected"
+                SelectionMode="Single">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Stroke="{StaticResource LightViolet3}"
+                            StrokeShape="RoundRectangle 20"
+                            StrokeThickness="1">
+                            <VerticalStackLayout Padding="10" Spacing="10">
+                                <VerticalStackLayout.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Offset="0.1" Color="#660066" />
+                                        <GradientStop Offset="1.0" Color="#cc0099" />
+                                    </LinearGradientBrush>
+                                </VerticalStackLayout.Background>
+                                <VerticalStackLayout>
+                                    <Label
+                                        FontSize="10"
+                                        Text="{Binding Id, StringFormat='Event-Id:{0}'}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontSize="20"
+                                        Text="{Binding Name}"
+                                        VerticalOptions="Center" />
+                                </VerticalStackLayout>
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="140"
+                                    Source="{Binding ImageIndex, StringFormat='event{0}.png'}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="130" />
+                                <!--<HorizontalStackLayout>
+                                <Image HeightRequest="30" Source="calendar_symbol.png" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    Text="{Binding Date}"
+                                    VerticalTextAlignment="Center" />
+                            </HorizontalStackLayout>-->
+                                <Image
+                                    Aspect="AspectFit"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="80"
+                                    Source="qr_icon.png"
+                                    VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnQrButton_Clicked" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+
+        <scheduler:SfScheduler
+            x:Name="EventScheduler"
+            Grid.Row="2"
+            AppointmentsSource="{Binding UserEvents}"
+            Background="AntiqueWhite"
+            View="Agenda">
+            <scheduler:SfScheduler.HeaderView>
+                <scheduler:SchedulerHeaderView Background="DarkGray">
+                    <!--<scheduler:SchedulerHeaderView.HeaderTemplate>
+                        <DataTemplate>
+                            <Border
+                                StrokeShape="RoundRectangle 15,15,0,0">
+                            <Grid Background="{StaticResource Gray600}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold" FontSize="18" Text="{Binding Text}" TextColor="AntiqueWhite"/>
+                            </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </scheduler:SchedulerHeaderView.HeaderTemplate>-->
+                </scheduler:SchedulerHeaderView>
+            </scheduler:SfScheduler.HeaderView>
+            <scheduler:SfScheduler.AppointmentMapping>
+                <scheduler:SchedulerAppointmentMapping
+                    EndTime="EndTime"
+                    StartTime="Date"
+                    Subject="Name" />
+            </scheduler:SfScheduler.AppointmentMapping>
+        </scheduler:SfScheduler>
+
+    </Grid>
+</ContentPage>

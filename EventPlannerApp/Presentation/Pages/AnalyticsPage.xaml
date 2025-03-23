@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.AnalyticsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:local="clr-namespace:EventPlannerApp.Domain.Entities"
+    Title="AnalyticsPage"
+    Background="{StaticResource LightViolet3}">
+
+    <VerticalStackLayout Padding="10" Spacing="10">
+
+        <Border
+            Stroke="Wheat"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="2" BackgroundColor="AntiqueWhite">
+            <charts:SfCartesianChart Title="Events Ansicht">
+
+                <charts:StackingColumnSeries
+                    Fill="MidnightBlue"
+                    ItemsSource="{Binding UserEvents}"
+                    Opacity="0.8"
+                    ShowDataLabels="True"
+                    XBindingPath="Name"
+                    YBindingPath="ParticipantsCount" />
+                <charts:StackingColumnSeries
+                    Fill="Orange"
+                    ItemsSource="{Binding UserEvents}"
+                    Opacity="0.5"
+                    ShowDataLabels="True"
+                    XBindingPath="Name"
+                    YBindingPath="ViewCount" />
+
+
+                <charts:SfCartesianChart.XAxes>
+                    <charts:CategoryAxis>
+                        <charts:CategoryAxis.Title>
+                            <charts:ChartAxisTitle Text="Events" FontAttributes="Bold"/>
+                        </charts:CategoryAxis.Title>
+                    </charts:CategoryAxis>
+                </charts:SfCartesianChart.XAxes>
+
+                <charts:SfCartesianChart.YAxes>
+                    <charts:NumericalAxis>
+                        <charts:NumericalAxis.Title>
+                            <charts:ChartAxisTitle Text="View-Anzahl" FontAttributes="Bold" />
+                        </charts:NumericalAxis.Title>
+                    </charts:NumericalAxis>
+                </charts:SfCartesianChart.YAxes>
+            </charts:SfCartesianChart>
+        </Border>
+
+        <Border
+            HeightRequest="250"
+            Stroke="Wheat"
+            StrokeShape="RoundRectangle 15"
+            StrokeThickness="2" BackgroundColor="AntiqueWhite">
+            <charts:SfCartesianChart Title="Events Bewertung">
+
+                <charts:ColumnSeries
+                    Fill="Goldenrod"
+                    ItemsSource="{Binding UserEvents}"
+                    Opacity="0.8"
+                    ShowDataLabels="True"
+                    XBindingPath="Name"
+                    YBindingPath="Rating" />
+
+
+                <charts:SfCartesianChart.XAxes>
+                    <charts:CategoryAxis>
+                    </charts:CategoryAxis>
+                </charts:SfCartesianChart.XAxes>
+
+                <charts:SfCartesianChart.YAxes>
+                    <charts:NumericalAxis>
+                        <charts:NumericalAxis.Title>
+                            <charts:ChartAxisTitle Text="Bewertung ⭐⭐⭐⭐⭐"/>
+                        </charts:NumericalAxis.Title>
+                    </charts:NumericalAxis>
+                </charts:SfCartesianChart.YAxes>
+            </charts:SfCartesianChart>
+        </Border>
+
+    </VerticalStackLayout>
+</ContentPage>
