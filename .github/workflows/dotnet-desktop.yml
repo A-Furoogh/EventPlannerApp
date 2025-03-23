@@ -16,9 +16,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: List repository files (debugging)
-      run: dir /s /b
-
     - name: Set up .NET 8.0
       uses: actions/setup-dotnet@v4
       with:
