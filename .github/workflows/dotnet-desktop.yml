@@ -3,10 +3,10 @@ name: .NET MAUI Android Build and Test
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-test:
@@ -16,16 +16,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: List repository files (debugging)
+      run: dir /s /b
+
     - name: Set up .NET 8.0
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore EventPlannerSolution/EventPlannerApp/EventPlannerApp.sln
+      run: dotnet restore EventPlannerApp/EventPlannerApp.sln
 
     - name: Build .NET MAUI Android project
-      run: dotnet build EventPlannerSolution/EventPlannerApp/EventPlannerApp.sln -f net8.0-android -c Release
+      run: dotnet build EventPlannerApp/EventPlannerApp.sln -f net8.0-android -c Release
 
     - name: Run unit tests
-      run: dotnet test EventPlannerSolution/UnitTestEventPlanner/UnitTestEventPlanner.csproj -c Release
+      run: dotnet test UnitTestEventPlanner/UnitTestEventPlanner.csproj -c Release
