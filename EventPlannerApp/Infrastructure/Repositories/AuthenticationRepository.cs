@@ -12,7 +12,7 @@ namespace EventPlannerApp.Infrastructure.Repositories
     public class AuthenticationRepository : IAuthenticationRepository
     {
         private readonly FirebaseClient _firebaseClient;
-        private int _userId;
+        private readonly int _userId;
         public AuthenticationRepository(FirebaseClient firebaseClient)
         {
             _firebaseClient = firebaseClient;

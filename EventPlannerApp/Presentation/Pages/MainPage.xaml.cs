@@ -2,6 +2,7 @@
 using EventPlannerApp.Domain.Entities;
 using EventPlannerApp.Presentation;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace EventPlannerApp.Presentation
 {
@@ -137,6 +138,19 @@ namespace EventPlannerApp.Presentation
         {
             var qrScanPage = _serviceProvider.GetRequiredService<QrScanPage>();
             Navigation.PushAsync(qrScanPage);
+        }
+
+        private async void OnLogOutButton_Clicked(object sender, EventArgs e)
+        {
+            // First ask the user if they are sure they want to log out
+            var answer = await DisplayAlert("Ausloggen", "Sie möchten ausloggen?", "Ja", "Nein");
+            if (answer)
+            {
+                var AuthenticationService = _serviceProvider.GetRequiredService<IAuthenticationService>();
+                AuthenticationService.Logout();
+                var loginPage = _serviceProvider.GetRequiredService<LoginPage>();
+                App.Current.MainPage = new NavigationPage(loginPage);
+            }
         }
     }
 

@@ -5,6 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Background="{StaticResource LightViolet2}">
 
+    <Shell.TitleView>
+        <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center">
+            <ImageButton
+                x:Name="LogOutButton"
+                BackgroundColor="Transparent"
+                Clicked="OnLogOutButton_Clicked"
+                HeightRequest="30"
+                Source="settings_icon.png"
+                WidthRequest="30" />
+        </HorizontalStackLayout>
+    </Shell.TitleView>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">

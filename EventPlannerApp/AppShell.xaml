@@ -21,7 +21,7 @@
                            Icon="my_event_icon.png"
                            Route="MyEventsPage"
                            ContentTemplate="{DataTemplate local:MyEventsPage}" />
-        </TabBar>
+    </TabBar>
     
     <!--<Shell.TitleView>
         <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center">

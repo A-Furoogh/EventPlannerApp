@@ -45,6 +45,8 @@ namespace EventPlannerApp.Application.Services
 
         public void Logout()
         {
+            Preferences.Default.Remove("Username");
+            Preferences.Default.Remove("Password");
             _isAuthenticated = false;
         }
     }
