@@ -61,7 +61,7 @@
             <Label
                 FontSize="20"
                 HorizontalOptions="CenterAndExpand"
-                Text="{Binding Date}" />
+                Text="{Binding Date, StringFormat='{}{0:MMMM yyyy HH:mm}'}" />
 
             <Label
                 FontSize="20"
@@ -80,7 +80,7 @@
                 Text="Event Beitreten"
                 TextColor="White" />
 
-            <Border
+            <Border x:Name="FeedbackSection"
                 Padding="5"
                 Stroke="Transparent"
                 StrokeShape="RoundRectangle 10">
@@ -90,7 +90,7 @@
                         <GradientStop Offset="1.0" Color="#ff99cc" />
                     </LinearGradientBrush>
                 </Border.Background>
-                <StackLayout x:Name="FeedbackSection" Spacing="10">
+                <StackLayout  Spacing="10">
                     <Label Text="Bewertung hinterlassen" />
                     <HorizontalStackLayout x:Name="RatingStars" Spacing="10">
                         <ImageButton

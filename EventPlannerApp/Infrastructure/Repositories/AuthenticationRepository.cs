@@ -23,14 +23,15 @@ namespace EventPlannerApp.Infrastructure.Repositories
             var user = users.Where(u => u.Object.Name.ToLower() == username.ToLower()).FirstOrDefault()?.Object;
             if (user != null && user.Password == password)
             {
-                _userId = user.Id;
+                Preferences.Default.Set("userId", user.Id);
                 return true;
             }
             return false;
         }
         public int GetUserIdAsync()
         {
-            return _userId;
+            var id = Preferences.Default.Get("userId", 0);
+            return id;
         }
     }
 }

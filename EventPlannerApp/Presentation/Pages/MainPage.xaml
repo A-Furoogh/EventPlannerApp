@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <HorizontalStackLayout Grid.Row="0" Spacing="10">
-            <Border
+            <Border 
                 Grid.Row="0"
                 Stroke="Transparent"
                 StrokeShape="RoundRectangle 20">
@@ -44,7 +44,7 @@
         </HorizontalStackLayout>
         <StackLayout Grid.Row="1">
 
-            <CollectionView
+            <CollectionView MaximumHeightRequest="550"
                 x:Name="EventsCollectionView"
                 HorizontalOptions="FillAndExpand"
                 HorizontalScrollBarVisibility="Never"
@@ -104,24 +104,18 @@
                                         <Label
                                             FontAttributes="Bold"
                                             FontSize="16"
-                                            Text="{Binding Date}"
+                                            Text="{Binding Date, StringFormat='{}{0:MMMM yyyy HH:mm}'}"
                                             VerticalTextAlignment="Center" />
                                     </HorizontalStackLayout>
                                     <Label FontSize="16" Text="{Binding OrganizerId, Converter={StaticResource UserIdsToNamesConverter}, StringFormat='von {0}'}" />
-                                    <FlexLayout Direction="Row" Wrap="Wrap">
-                                        <CollectionView ItemsSource="{Binding Tags}" SelectionMode="None">
-                                            <CollectionView.ItemsLayout>
-                                                <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
-                                            </CollectionView.ItemsLayout>
-                                            <CollectionView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Label
-                                                        FontSize="Medium"
-                                                        LineBreakMode="WordWrap"
-                                                        Text="{Binding StringFormat='#{0}'}" />
-                                                </DataTemplate>
-                                            </CollectionView.ItemTemplate>
-                                        </CollectionView>
+                                    <FlexLayout Direction="Row" Wrap="Wrap" BindableLayout.ItemsSource="{Binding Tags}" JustifyContent="Start">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <Frame HeightRequest="35" Padding="2" BackgroundColor="{StaticResource LightViolet3}" CornerRadius="10" BorderColor="Transparent">
+                                                    <Label Text="{Binding StringFormat='#{0}'}" FontSize="Medium" />
+                                                </Frame>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
                                     </FlexLayout>
                                     <Label
                                         FontSize="24"

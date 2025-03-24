@@ -37,7 +37,7 @@ namespace EventPlannerApp.Infrastructure.Repositories
                 .OnceAsync<Event>()
                 .Result
                 .Select(f => f.Object)
-                .Where(e => e.ParticipantsIds.Contains(MainPage.UserId))); // !!!
+                .Where(e => e.ParticipantsIds != null && e.ParticipantsIds.Contains(MainPage.UserId)));
 
             PublicEvents = new ObservableCollection<Event>(_firebaseClient
                 .Child("Events")

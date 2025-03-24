@@ -25,9 +25,8 @@ public partial class AddEventPage : ContentPage
     private async void OnAddEventClicked(object sender, EventArgs e)
     {
         var eventService = _serviceProvider.GetRequiredService<IEventService>();
-        var authenticationService = _serviceProvider.GetRequiredService<IAuthenticationService>();
         int eventId = await GenerateEventId();
-        int userId = authenticationService.GetUserIdAsync();
+        int userId = MainPage.UserId;
         var newEvent = new Event
         {
             Id = eventId,
@@ -82,6 +81,16 @@ public partial class AddEventPage : ContentPage
         if (newEvent.EndTime < newEvent.Date)
         {
             await DisplayAlert("Error", "Event 'Endzeit' kann nicht richtig sein! ", "OK");
+            return;
+        }
+        if (newEvent.OrganizerId is null)
+        {
+            await DisplayAlert("Error", "Organizer-ID fehlt!", "OK");
+            return;
+        }
+        if (newEvent.ParticipantsIds is null)
+        {
+            await DisplayAlert("Error", "Participants-ID fehlt!", "OK");
             return;
         }
         await eventService.CreateEvent(newEvent);
