@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using ZXing.Net.Maui.Controls;
 using Syncfusion.Maui.Core.Hosting;
 using Microsoft.Maui.LifecycleEvents;
+using CommunityToolkit.Maui;
+using EventPlannerApp.Presentation.ViewModels;
 
 namespace EventPlannerApp
 {
@@ -19,6 +21,7 @@ namespace EventPlannerApp
             builder
                 .UseMauiApp<App>()
                 .UseBarcodeReader()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -49,6 +52,11 @@ namespace EventPlannerApp
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IChatService, ChatService>();
 
+            // add ViewModels
+            services.AddTransient<QrScanViewModel>();
+            services.AddTransient<QrCodeViewModel>();
+            services.AddTransient<SignupViewModel>();
+
             services.AddTransient<AddEventPage>();
             services.AddTransient<MainPage>();
             services.AddTransient<LoginPage>();
@@ -63,6 +71,16 @@ namespace EventPlannerApp
             services.AddTransient<QrScanPage>();
             services.AddTransient<ModifyEventPage>();
             services.AddTransient<AnalyticsPage>();
+
+            
+
+            services.AddSingleton<IServiceProvider>(provider => provider);
+
+            _ = services.AddSingleton<INavigation>(provider =>
+            {
+                INavigation? navigation = App.Current?.MainPage?.Navigation;
+                return navigation ?? throw new InvalidOperationException("Navigation is not available.");
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
+using EventPlannerApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 
 namespace EventPlannerApp.Presentation;
@@ -46,10 +47,10 @@ public partial class MyEventsPage : ContentPage
     {
         if (sender is Image image && image.Parent is VerticalStackLayout grid && grid.BindingContext is Event selectedEvent)
         {
-            var qrCodePage = _serviceProvider.GetRequiredService<QrCodePage>();
-            qrCodePage.EventId = selectedEvent.Id;
-            qrCodePage.CreateQrCodeInGrid();
-            Navigation.PushAsync(qrCodePage);
+            var qrCodeViewModel = _serviceProvider.GetRequiredService<QrCodeViewModel>();
+            qrCodeViewModel.EventId = selectedEvent.Id;
+            qrCodeViewModel.GenerateQrCode();
+            Navigation.PushAsync(new QrCodePage(qrCodeViewModel));
         }
     }
     

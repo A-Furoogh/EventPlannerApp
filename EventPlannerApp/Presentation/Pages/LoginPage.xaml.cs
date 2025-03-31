@@ -1,4 +1,5 @@
 using EventPlannerApp.Application.Interfaces;
+using EventPlannerApp.Presentation.ViewModels;
 
 namespace EventPlannerApp.Presentation;
 
@@ -48,8 +49,8 @@ public partial class LoginPage : ContentPage
     }
     private async void OnGotoSignupClicked(object sender, EventArgs e)
     {
-        var signupPage = _serviceProvider.GetRequiredService<SignupPage>();
-        await Navigation.PushAsync(signupPage);
+        var signupViewModel = _serviceProvider.GetRequiredService<SignupViewModel>();
+        await Navigation.PushAsync(new SignupPage(signupViewModel));
     }
 
     private async void AuthenticateUser(string username, string password)

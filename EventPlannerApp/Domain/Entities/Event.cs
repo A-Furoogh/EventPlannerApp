@@ -25,7 +25,9 @@ namespace EventPlannerApp.Domain.Entities
 
         public Dictionary<String, Feedback>? Feedbacks { get; set; }
         public int? ViewCount { get; set; }
-        public int Rating => Feedbacks?.Count > 0 ? (int)Math.Round((double)Feedbacks.Sum(f => f.Value.Rating) / Feedbacks.Count) : 0;
+        public int Rating => Feedbacks?.Count > 0 ? 
+                            (int)Math.Round((double)Feedbacks.
+                            Sum(f => f.Value.Rating) / Feedbacks.Count) : 0;
     }
 
     public class Feedback

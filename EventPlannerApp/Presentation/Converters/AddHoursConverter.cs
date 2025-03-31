@@ -9,7 +9,7 @@ namespace EventPlannerApp.Presentation.Converters
 {
     public class AddHoursConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is DateTime dateTime && parameter is string hoursToAdd && int.TryParse(hoursToAdd, out int hours))
             {
@@ -18,7 +18,7 @@ namespace EventPlannerApp.Presentation.Converters
             return value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

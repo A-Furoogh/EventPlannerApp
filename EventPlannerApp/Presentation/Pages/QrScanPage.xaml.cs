@@ -1,4 +1,5 @@
 using EventPlannerApp.Application.Interfaces;
+using EventPlannerApp.Presentation.ViewModels;
 using Microsoft.Extensions.Logging;
 using ZXing;
 
@@ -6,52 +7,24 @@ namespace EventPlannerApp.Presentation;
 
 public partial class QrScanPage : ContentPage
 {
-    private readonly IServiceProvider _serviceProvider;
-	public QrScanPage(IServiceProvider serviceProvider)
+    private readonly QrScanViewModel _viewModel;
+
+    private bool _isScanning = true;
+    public QrScanPage(IServiceProvider serviceProvider)
 	{
 		InitializeComponent();
-        _serviceProvider = serviceProvider;
-        QrCodeScanner.Options = new ZXing.Net.Maui.BarcodeReaderOptions
-        {
-            Formats = ZXing.Net.Maui.BarcodeFormat.QrCode,
-            AutoRotate = true,
-            
-        };
+        _viewModel = new QrScanViewModel(serviceProvider);
+        BindingContext = _viewModel;
     }
 
     private async void QrCodeScanner_BarcodesDetected(object sender, ZXing.Net.Maui.BarcodeDetectionEventArgs e)
     {
-        var result = e.Results.FirstOrDefault();
-        if (result == null)
+        if (_isScanning)
         {
-            return;
-        }
-        //Dispatcher.DispatchAsync(() =>
-        //{
-        //    DisplayAlert("Barcode", result.Value, "OK");
-        //});
-        int id = int.Parse(String.Concat(result.Value.Where(Char.IsDigit)));
-        var eventService = _serviceProvider.GetRequiredService<IEventService>();
-        var ev = eventService.GetEventById(id).Result;
-        if (ev != null)
-        {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                var eventPage = _serviceProvider.GetRequiredService<EventPage>();
-                eventPage.InitializeAsync(ev);
-                await Navigation.PushAsync(eventPage);
+            _isScanning = false; // Set flag to false immediately
+            QrCodeScanner.IsEnabled = false; //disable the scanner
 
-                Navigation.RemovePage(this); 
-            });
-        }
-        else
-        {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await DisplayAlert("Error", "Event nicht gefunden!", "OK");
-
-                Navigation.RemovePage(this);
-            });
+            await _viewModel.HandleBarcodesDetected(e, this);
         }
     }
 }

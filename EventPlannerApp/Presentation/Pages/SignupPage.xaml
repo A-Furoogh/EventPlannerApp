@@ -6,7 +6,9 @@
                 Shell.ForegroundColor="Black"
                 Shell.TitleColor="DarkGreen"
                 Shell.NavBarIsVisible="True"
-                Shell.BackgroundColor="{StaticResource MyTeal}">
+                Shell.BackgroundColor="{StaticResource MyTeal}"
+             xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels">
+
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -59,7 +61,7 @@
                         VerticalOptions="Center"
                         Aspect="AspectFill">
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnProfileImageTapped"/>
+                            <TapGestureRecognizer Command="{Binding OnProfileImageTappedCommand}"/>
                         </Image.GestureRecognizers>
                     </Image>
                 </Border>
@@ -73,7 +75,7 @@
                     HorizontalOptions="End"
                 >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnProfileImageTapped"/>
+                        <TapGestureRecognizer Command="{Binding OnProfileImageTappedCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
@@ -90,21 +92,21 @@
                 MaximumWidthRequest="300"
                 Margin="0,10">
                 <Entry x:Name="UsernameEntry" Placeholder="Benutzername" 
-                    BackgroundColor="ForestGreen"/>
+                    BackgroundColor="ForestGreen" Text="{Binding Username}"/>
             </Border>
             <Border
                 StrokeShape="RoundRectangle 10" Stroke="Transparent"
                 MaximumWidthRequest="300">
                             <Entry x:Name="PasswordEntry" 
                        Placeholder="Passwort"
-                       BackgroundColor="ForestGreen"/>
+                       BackgroundColor="ForestGreen" Text="{Binding Password}"/>
             </Border>
             <Border
                 StrokeShape="RoundRectangle 10" Stroke="Transparent"
                 MaximumWidthRequest="300">
                 <Entry x:Name="ConfirmPasswordEntry" 
                        Placeholder="Passwort bestätigen"
-                       BackgroundColor="ForestGreen"/>
+                       BackgroundColor="ForestGreen" Text="{Binding ConfirmPassword}"/>
             </Border>
             <Border
                 StrokeShape="RoundRectangle 10" Stroke="Transparent"
@@ -112,10 +114,10 @@
                 Margin="0,10">
                 <Entry x:Name="EmailEntry" 
                    Placeholder="E-Mail (Optional)" 
-                   BackgroundColor="ForestGreen"/>
+                   BackgroundColor="ForestGreen" Text="{Binding Email}"/>
                     </Border>
-            <Button Text="Anlegen" Clicked="OnSignupClicked" FontSize="16" FontAttributes="Bold"
-                    MaximumWidthRequest="200"
+            <Button Text="Anlegen" FontSize="16" FontAttributes="Bold"
+                    MaximumWidthRequest="200" Command="{Binding OnSignupClickedCommand}"
                     BackgroundColor="YellowGreen"
                     Margin="25"/>
         </VerticalStackLayout>
