@@ -1,5 +1,6 @@
 using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
+using EventPlannerApp.Presentation.ViewModels;
 
 namespace EventPlannerApp.Presentation;
 
@@ -57,9 +58,11 @@ public partial class EventPage : ContentPage
         try
         {
             var modifyEventPage = _serviceProvider.GetRequiredService<ModifyEventPage>();
-            modifyEventPage.InitializeAsync(this._event);
-            Navigation.PushAsync(modifyEventPage);
+            var modifyEventViewModel = _serviceProvider.GetRequiredService<ModifyEventViewModel>();
+            modifyEventViewModel.MyEvent = this._event;
+            modifyEventPage.BindingContext = modifyEventViewModel;
 
+            Navigation.PushAsync(modifyEventPage);
             Navigation.RemovePage(this);
         }
         catch (Exception ex)

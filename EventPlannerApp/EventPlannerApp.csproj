@@ -96,40 +96,40 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Presentation\Pages\AddEventPage.xaml">
+	  <MauiXaml Update="Presentation\Views\AddEventPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\AnalyticsPage.xaml">
+	  <MauiXaml Update="Presentation\Views\AnalyticsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\ChatPage.xaml">
+	  <MauiXaml Update="Presentation\Views\ChatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\ChatsPage.xaml">
+	  <MauiXaml Update="Presentation\Views\ChatsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\EventImagePage.xaml">
+	  <MauiXaml Update="Presentation\Views\EventImagePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\EventPage.xaml">
+	  <MauiXaml Update="Presentation\Views\EventPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\LoginPage.xaml">
+	  <MauiXaml Update="Presentation\Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\ModifyEventPage.xaml">
+	  <MauiXaml Update="Presentation\Views\ModifyEventPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\MyEventsPage.xaml">
+	  <MauiXaml Update="Presentation\Views\MyEventsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\QrCodePage.xaml">
+	  <MauiXaml Update="Presentation\Views\QrCodePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\QrScanPage.xaml">
+	  <MauiXaml Update="Presentation\Views\QrScanPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Presentation\Pages\SignupPage.xaml">
+	  <MauiXaml Update="Presentation\Views\SignupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:EventPlannerApp"
     xmlns:scheduler="clr-namespace:Syncfusion.Maui.Scheduler;assembly=Syncfusion.Maui.Scheduler"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels"
     Title="MyEventsPage"
     Background="{StaticResource LightViolet2}">
 
@@ -23,7 +24,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="20">
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
             <Border
                 Grid.Row="1"
                 Stroke="Transparent"
@@ -38,7 +39,7 @@
             </Border>
             <Button
                 BackgroundColor="{StaticResource MyTeal}"
-                Clicked="OnAnalyticsButton_Clicked"
+                Command="{Binding OnAnalyticsClickedCommand}"
                 FontAttributes="Bold"
                 FontSize="18"
                 HorizontalOptions="End"
@@ -50,10 +51,12 @@
         <StackLayout Grid.Row="1">
             <CollectionView
                 x:Name="EventsCollectionView"
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="Fill"
                 HorizontalScrollBarVisibility="Never"
                 ItemsSource="{Binding UserEvents}"
-                SelectedItem="OnEventSelected"
+                SelectedItem="{Binding SelectedEvent}"
+                SelectionChangedCommand="{Binding OnEventSelectedCommand}"
+                SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
                 SelectionMode="Single">
 
                 <CollectionView.ItemsLayout>
@@ -103,7 +106,10 @@
                                     Source="qr_icon.png"
                                     VerticalOptions="Center">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnQrButton_Clicked" />
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MyEventsViewModel}}, Path=QrButtonClickedCommand}"
+                                            CommandParameter="{Binding}"
+                                            NumberOfTapsRequired="1" />
                                     </Image.GestureRecognizers>
                                 </Image>
                             </VerticalStackLayout>

@@ -56,6 +56,8 @@ namespace EventPlannerApp
             services.AddTransient<QrScanViewModel>();
             services.AddTransient<QrCodeViewModel>();
             services.AddTransient<SignupViewModel>();
+            services.AddTransient<MyEventsViewModel>();
+            services.AddTransient<ModifyEventViewModel>();
 
             services.AddTransient<AddEventPage>();
             services.AddTransient<MainPage>();

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EventPlannerApp.Presentation.ModifyEventPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels"
+    Title="ModifyEventPage">
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label
+            FontAttributes="Bold"
+            FontSize="30"
+            HorizontalOptions="Center"
+            Text="Event bearbeiten" />
+        <Image
+            Aspect="AspectFill"
+            HeightRequest="150"
+            Source="{Binding MyEvent.ImageIndex, StringFormat='event{0}.png'}"
+            VerticalOptions="Center"
+            WidthRequest="200" />
+        <Entry
+            x:Name="EventNameEntry"
+            FontAttributes="Bold"
+            FontSize="26"
+            Placeholder="Eventname"
+            Text="{Binding MyEvent.Name}" />
+        <Entry
+            x:Name="DescriptionEntry"
+            Placeholder="Beschreibung"
+            Text="{Binding MyEvent.Description}" />
+        <HorizontalStackLayout HorizontalOptions="Start" Spacing="40">
+            <HorizontalStackLayout>
+                <Image
+                    HeightRequest="30"
+                    Source="calendar_symbol.png"
+                    WidthRequest="30" />
+                <DatePicker
+                    x:Name="DatePicker"
+                    Date="{Binding MyEvent.Date}"
+                    FontAttributes="Bold" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="End">
+                <Image
+                    HeightRequest="30"
+                    Source="location_symbol.png"
+                    WidthRequest="35" />
+                <Entry
+                    x:Name="LocationEntry"
+                    FontAttributes="Bold"
+                    Placeholder="Ort"
+                    Text="{Binding MyEvent.Location}" />
+            </HorizontalStackLayout>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Entry
+                x:Name="MaxParticipantsEntry"
+                Keyboard="Numeric"
+                Placeholder="Max. Teilnehmer"
+                Text="{Binding MyEvent.MaxParticipants}" />
+            <CheckBox x:Name="IsPublicCheckBox" IsChecked="{Binding MyEvent.IsPublic}" />
+        </HorizontalStackLayout>
+        <CollectionView
+            x:Name="TagsCollection"
+            ItemsSource="{Binding MyEvent.Tags}"
+            SelectionMode="None"
+            VerticalOptions="Start">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="3" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="5"
+                        Padding="5"
+                        BackgroundColor="{StaticResource MyTeal}"
+                        CornerRadius="10">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="{Binding}"
+                            TextColor="White" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button
+            BackgroundColor="{StaticResource SaveButtonColor}"
+            Command="{Binding SaveEventCommand}"
+            FontAttributes="Bold"
+            Text="Event speichern"
+            TextColor="White" />
+        <Button
+            BackgroundColor="OrangeRed"
+            Command="{Binding DeleteEventCommand}"
+            FontAttributes="Bold"
+            Text="Event löschen"
+            TextColor="White" />
+    </VerticalStackLayout>
+</ContentPage>
