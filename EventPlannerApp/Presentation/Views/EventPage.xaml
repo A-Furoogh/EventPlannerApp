@@ -25,24 +25,24 @@
             <Button
                 x:Name="Edit_Button"
                 Padding="0"
-                Clicked="OnEditEventButton_Clicked"
+                Command="{Binding EditCommand}"
                 FontSize="16"
                 HeightRequest="40"
                 HorizontalOptions="End"
-                IsVisible="False"
+                IsVisible="{Binding IsEditButtonVisible}"
                 Text="Bearbeiten"
                 WidthRequest="100" />
             <Label
                 FontAttributes="Bold"
                 FontSize="30"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Text="{Binding Name}" />
 
             <Image
                 Aspect="AspectFill"
                 HeightRequest="200"
                 Source="{Binding ImageIndex, StringFormat='event{0}.png'}"
-                VerticalOptions="CenterAndExpand"
+                VerticalOptions="Center"
                 WidthRequest="200">
                 <Image.Shadow>
                     <Shadow
@@ -55,17 +55,17 @@
 
             <Label
                 FontSize="20"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Text="{Binding Description}" />
 
             <Label
                 FontSize="20"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Text="{Binding Date, StringFormat='{}{0:MMMM yyyy HH:mm}'}" />
 
             <Label
                 FontSize="20"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Text="{Binding Location}" />
 
             <HorizontalStackLayout>
@@ -75,12 +75,14 @@
 
             <Button
                 x:Name="Join_Button"
+                IsEnabled="{Binding IsJoinButtonEnabled}"
                 BackgroundColor="{StaticResource SaveButtonColor}"
-                Clicked="OnJoinEventButton_Clicked"
-                Text="Event Beitreten"
+                Command="{Binding JoinCommand}"
+                Text="{Binding JoinButtonText}"
                 TextColor="White" />
 
             <Border x:Name="FeedbackSection"
+                    IsVisible="{Binding IsFeedbackVisible}"
                 Padding="5"
                 Stroke="Transparent"
                 StrokeShape="RoundRectangle 10">
@@ -94,40 +96,40 @@
                     <Label Text="Bewertung hinterlassen" />
                     <HorizontalStackLayout x:Name="RatingStars" Spacing="10">
                         <ImageButton
-                            Clicked="OnStarClicked"
+                            Command="{Binding StarClickedCommand}"
                             CommandParameter="1"
                             HeightRequest="30"
-                            Source="star_empty.png"
+                            Source="{Binding StarSources[0]}"
                             WidthRequest="30" />
                         <ImageButton
-                            Clicked="OnStarClicked"
+                            Command="{Binding StarClickedCommand}"
                             CommandParameter="2"
                             HeightRequest="30"
-                            Source="star_empty.png"
+                            Source="{Binding StarSources[1]}"
                             WidthRequest="30" />
                         <ImageButton
-                            Clicked="OnStarClicked"
+                            Command="{Binding StarClickedCommand}"
                             CommandParameter="3"
                             HeightRequest="30"
-                            Source="star_empty.png"
+                            Source="{Binding StarSources[2]}"
                             WidthRequest="30" />
                         <ImageButton
-                            Clicked="OnStarClicked"
+                            Command="{Binding StarClickedCommand}"
                             CommandParameter="4"
                             HeightRequest="30"
-                            Source="star_empty.png"
+                            Source="{Binding StarSources[3]}"
                             WidthRequest="30" />
                         <ImageButton
-                            Clicked="OnStarClicked"
+                            Command="{Binding StarClickedCommand}"
                             CommandParameter="5"
                             HeightRequest="30"
-                            Source="star_empty.png"
+                            Source="{Binding StarSources[4]}"
                             WidthRequest="30" />
                     </HorizontalStackLayout>
 
                     <Entry x:Name="CommentEntry" Placeholder="Kommentar hinterlassen..." />
 
-                    <Button Clicked="OnSubmitFeedbackButton_Clicked" Text="Absenden">
+                    <Button Command="{Binding SubmitFeedbackCommand}" Text="Absenden">
                         <Button.Background>
                             <LinearGradientBrush>
                                 <GradientStop Offset="0.1" Color="#003300" />
@@ -138,7 +140,7 @@
                 </StackLayout>
             </Border>
 
-            <CollectionView ItemsSource="{Binding Feedbacks.Values}" SelectionMode="None">
+            <CollectionView ItemsSource="{Binding Feedbacks}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>

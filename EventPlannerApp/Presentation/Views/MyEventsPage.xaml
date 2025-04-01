@@ -55,7 +55,7 @@
                 HorizontalScrollBarVisibility="Never"
                 ItemsSource="{Binding UserEvents}"
                 SelectedItem="{Binding SelectedEvent}"
-                SelectionChangedCommand="{Binding OnEventSelectedCommand}"
+                SelectionChangedCommand="{Binding EventSelectedCommand}"
                 SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
                 SelectionMode="Single">
 

@@ -4,12 +4,15 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="EventImagePage"
-    BackgroundColor="{StaticResource DarkViolet}">
+    BackgroundColor="{StaticResource DarkViolet}"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels">
+    
     <ScrollView>
         <VerticalStackLayout Padding="10">
             <CollectionView
                 ItemsSource="{Binding Images}"
-                SelectionChanged="OnImageClicked"
+                SelectionChangedCommand="{Binding ImageClickedCommand}"
+                SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
                 SelectionMode="Single">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout

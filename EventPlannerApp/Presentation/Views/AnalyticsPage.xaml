@@ -6,7 +6,8 @@
     xmlns:charts="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
     xmlns:local="clr-namespace:EventPlannerApp.Domain.Entities"
     Title="AnalyticsPage"
-    Background="{StaticResource LightViolet3}">
+    Background="{StaticResource LightViolet3}"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels">
 
     <VerticalStackLayout Padding="10" Spacing="10">
 

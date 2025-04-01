@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:locale="clr-namespace:EventPlannerApp.Presentation.Helpers"
     Title="ChatPage"
-    BackgroundColor="#660066">
+    BackgroundColor="#660066"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels">
 
     <Page.Resources>
 
@@ -74,7 +75,7 @@
                     FontSize="Large"
                     Text="{Binding PartnerName}"
                     TextColor="AntiqueWhite"
-                    VerticalOptions="CenterAndExpand" />
+                    VerticalOptions="Center" />
             </HorizontalStackLayout>
         </Frame>
         <Grid Grid.Row="1">
@@ -101,7 +102,7 @@
                 BackgroundColor="LightGray"
                 HeightRequest="1"
                 Opacity="0.2" />
-            <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+            <HorizontalStackLayout HorizontalOptions="Center">
                 <Border
                     Padding="5"
                     BackgroundColor="{StaticResource Gray200}"
@@ -110,20 +111,19 @@
                     <Editor
                         x:Name="MessageEntry"
                         AutoSize="TextChanges"
-                        Completed="OnMessageEntered"
                         HorizontalOptions="Start"
                         MinimumHeightRequest="80"
                         MinimumWidthRequest="300"
                         Placeholder="Nachricht eingeben"
                         PlaceholderColor="{StaticResource Gray900}"
-                        Text="{Binding NewMessage}"
+                        Text="{Binding MessageText}"
                         VerticalTextAlignment="Center"
                         WidthRequest="300" />
                 </Border>
                 <ImageButton
                     Margin="10,0,5,0"
                     BackgroundColor="{StaticResource MyTeal}"
-                    Clicked="OnMessageEntered"
+                    Command="{Binding SendMessageCommand}"
                     CornerRadius="25"
                     HeightRequest="50"
                     HorizontalOptions="End"

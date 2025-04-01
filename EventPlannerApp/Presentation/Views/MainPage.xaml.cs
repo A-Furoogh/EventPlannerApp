@@ -1,6 +1,7 @@
 ﻿using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
 using EventPlannerApp.Presentation;
+using EventPlannerApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -71,15 +72,19 @@ namespace EventPlannerApp.Presentation
         {
             if (e.CurrentSelection.FirstOrDefault() is Event selectedEvent)
             {
+                var eventViewModel = _serviceProvider.GetRequiredService<EventViewModel>();
+                eventViewModel.InitializeAsync(selectedEvent);
                 var eventPage = _serviceProvider.GetRequiredService<EventPage>();
-                eventPage.InitializeAsync(selectedEvent);
+                eventPage.BindingContext = eventViewModel;
                 Navigation.PushAsync(eventPage);
             }
         }
         private async void OnAddEvent_Clicked(object sender, EventArgs e)
         {
-            var AddEventPage = _serviceProvider.GetRequiredService<AddEventPage>();
-            await Navigation.PushAsync(AddEventPage);
+            var addEventViewModel = _serviceProvider.GetRequiredService<AddEventViewModel>();
+            var addEventPage = _serviceProvider.GetRequiredService<AddEventPage>();
+            addEventPage.BindingContext = addEventViewModel;
+            await Navigation.PushAsync(addEventPage);
         }
 
         public Task LoadUserNamesAsync()

@@ -52,8 +52,10 @@ namespace EventPlannerApp.Presentation.ViewModels
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
+                            var eventViewModel = _serviceProvider.GetRequiredService<EventViewModel>();
+                            eventViewModel.InitializeAsync(ev);
                             var eventPage = _serviceProvider.GetRequiredService<EventPage>();
-                            eventPage.InitializeAsync(ev);
+                            eventPage.BindingContext = eventViewModel;
                             await navigation.PushAsync(eventPage);
                             navigation.RemovePage(currentPage);
                         });

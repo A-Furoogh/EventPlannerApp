@@ -18,7 +18,7 @@ namespace EventPlannerApp.Presentation.ViewModels
         [ObservableProperty]
         private Event? selectedEvent;
 
-        public IRelayCommand<Event?> OnEventSelectedCommand => new RelayCommand<Event?>(OnEventSelected);
+        public IRelayCommand<Event?> EventSelectedCommand => new RelayCommand<Event?>(OnEventSelected);
         public IRelayCommand<Event?> QrButtonClickedCommand => new RelayCommand<Event?>(OnQrButtonClicked);
         public IRelayCommand OnAnalyticsClickedCommand => new RelayCommand(OnAnalyticsClicked);
 
@@ -40,7 +40,7 @@ namespace EventPlannerApp.Presentation.ViewModels
             };
         }
 
-        private void OnEventSelected(Event? selectedEvent) 
+        private async void OnEventSelected(Event? selectedEvent) 
         {
             if (selectedEvent == null)
             {
@@ -52,10 +52,12 @@ namespace EventPlannerApp.Presentation.ViewModels
             }
             if (selectedEvent != null)
             {
+                var eventViewModel = _serviceProvider.GetRequiredService<EventViewModel>();
+                eventViewModel.InitializeAsync(selectedEvent);
                 var eventPage = _serviceProvider.GetRequiredService<EventPage>();
-                eventPage.InitializeAsync(selectedEvent);
+                eventPage.BindingContext = eventViewModel;
                 var navigationService = _serviceProvider.GetRequiredService<INavigation>();
-                navigationService.PushAsync(eventPage);
+                await navigationService.PushAsync(eventPage);
             }
         }
 
@@ -73,7 +75,9 @@ namespace EventPlannerApp.Presentation.ViewModels
 
         private void OnAnalyticsClicked()
         {
+            var analyticsViewModel = _serviceProvider.GetRequiredService<AnalyticsViewModel>();
             var analyticsPage = _serviceProvider.GetRequiredService<AnalyticsPage>();
+            analyticsPage.BindingContext = analyticsViewModel;
             var navigationService = _serviceProvider.GetRequiredService<INavigation>();
             navigationService.PushAsync(analyticsPage);
         }

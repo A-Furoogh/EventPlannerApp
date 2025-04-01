@@ -1,5 +1,6 @@
 using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
+using EventPlannerApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 
 namespace EventPlannerApp.Presentation;
@@ -73,7 +74,9 @@ public ChatsPage(IServiceProvider serviceProvider)
         // !!!
         if (Chats.Any(c => c.ParticipantIds.Contains(user.Id)))
         {
-            chatPage.InitializeAsync(chat: Chats.FirstOrDefault(c => c.ParticipantIds.Contains(user.Id)));
+            var chatViewModel = _serviceProvider.GetRequiredService<ChatViewModel>();
+            chatViewModel.InitializeAsync(chat: Chats.FirstOrDefault(c => c.ParticipantIds.Contains(user.Id)));
+            chatPage.BindingContext = chatViewModel;
             await Navigation.PushAsync(chatPage);
         }
         else
@@ -87,7 +90,9 @@ public ChatsPage(IServiceProvider serviceProvider)
             };
             await chatService.CreateChat(chat);
 
-            chatPage.InitializeAsync(chat);
+            var chatViewModel = _serviceProvider.GetRequiredService<ChatViewModel>();
+            chatViewModel.InitializeAsync(chat);
+            chatPage.BindingContext = chatViewModel;
             await Navigation.PushAsync(chatPage);
         }
     }
@@ -96,8 +101,10 @@ public ChatsPage(IServiceProvider serviceProvider)
     {
         if (e.CurrentSelection.FirstOrDefault() is Chat selectedChat)
         {
+            var chatViewModel = _serviceProvider.GetRequiredService<ChatViewModel>();
+            chatViewModel.InitializeAsync(selectedChat);
             var chatPage = _serviceProvider.GetRequiredService<ChatPage>();
-            chatPage.InitializeAsync(selectedChat);
+            chatPage.BindingContext = chatViewModel;
             await Navigation.PushAsync(chatPage);
         }
     }

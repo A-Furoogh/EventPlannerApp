@@ -58,6 +58,11 @@ namespace EventPlannerApp
             services.AddTransient<SignupViewModel>();
             services.AddTransient<MyEventsViewModel>();
             services.AddTransient<ModifyEventViewModel>();
+            services.AddTransient<AddEventViewModel>();
+            services.AddTransient<AnalyticsViewModel>();
+            services.AddTransient<ChatViewModel>();
+            services.AddTransient<EventImageViewModel>();
+            services.AddTransient<EventViewModel>();
 
             services.AddTransient<AddEventPage>();
             services.AddTransient<MainPage>();

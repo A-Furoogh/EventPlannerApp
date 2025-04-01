@@ -67,89 +67,88 @@ namespace EventPlannerApp.Infrastructure.Repositories
         }
         private void AddOrUpdateEvent(Event ev)
         {
-            var existingEvent = Events.FirstOrDefault(e => e.Id == ev.Id);
-            if (existingEvent != null)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                // Update existing event
-                var index = Events.IndexOf(existingEvent);
-                Events[index] = ev;
-            }
-            else
-            {
-                // Add new event
-                Events.Add(ev);
-            }
+                try
+                {
+                    // Update Events collection
+                    var existingEvent = Events.FirstOrDefault(e => e.Id == ev.Id);
+                    if (existingEvent != null)
+                    {
+                        var index = Events.IndexOf(existingEvent);
+                        Events[index] = ev;
+                    }
+                    else
+                    {
+                        Events.Add(ev);
+                    }
 
-            //if (ev.ParticipantsIds.Contains(MainPage.UserId))
-            //{
-            //    var existingUserEvent = UserEvents.FirstOrDefault(e => e.Id == ev.Id);
-            //    if (existingUserEvent != null)
-            //    {
-            //        var userIndex = UserEvents.IndexOf(existingUserEvent);
-            //        UserEvents[userIndex] = ev;
-            //    }
-            //    else
-            //    {
-            //        UserEvents.Add(ev);
-            //    }
-            //}
+                    // Update UserEvents collection
+                    var existingUserEvent = UserEvents.FirstOrDefault(e => e.Id == ev.Id);
+                    bool isUserPartOfEvent = ev.ParticipantsIds?.Contains(MainPage.UserId) ?? false;
 
-            var existingUserEvent = UserEvents.FirstOrDefault(e => e.Id == ev.Id);
-            bool isUserPartOfEvent = ev.ParticipantsIds.Contains(MainPage.UserId);
+                    if (isUserPartOfEvent)
+                    {
+                        if (existingUserEvent != null)
+                        {
+                            var userIndex = UserEvents.IndexOf(existingUserEvent);
+                            UserEvents[userIndex] = ev;
+                        }
+                        else
+                        {
+                            UserEvents.Add(ev);
+                        }
+                    }
+                    else if (existingUserEvent != null)
+                    {
+                        UserEvents.Remove(existingUserEvent);
+                    }
 
-            if (isUserPartOfEvent)
-            {
-                if (existingUserEvent != null)
-                {
-                    var userIndex = UserEvents.IndexOf(existingUserEvent);
-                    UserEvents[userIndex] = ev;
+                    // Update PublicEvents collection
+                    var existingPublicEvent = PublicEvents.FirstOrDefault(e => e.Id == ev.Id);
+                    if (ev.IsPublic)
+                    {
+                        if (existingPublicEvent != null)
+                        {
+                            var publicIndex = PublicEvents.IndexOf(existingPublicEvent);
+                            PublicEvents[publicIndex] = ev;
+                        }
+                        else
+                        {
+                            PublicEvents.Add(ev);
+                        }
+                    }
+                    else if (existingPublicEvent != null)
+                    {
+                        PublicEvents.Remove(existingPublicEvent);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    UserEvents.Add(ev);
+                    Console.WriteLine($"Error updating collections: {ex.Message}");
                 }
-            }
-            else
-            {
-                if (existingUserEvent != null)
-                {
-                    UserEvents.Remove(existingUserEvent);
-                }
-            }
-
-            var existingPublicEvent = PublicEvents.FirstOrDefault(e => e.Id == ev.Id);
-            if (ev.IsPublic)
-            {
-                if (existingPublicEvent != null)
-                {
-                    var publicIndex = PublicEvents.IndexOf(existingPublicEvent);
-                    PublicEvents[publicIndex] = ev;
-                }
-                else
-                {
-                    PublicEvents.Add(ev);
-                }
-            }
+            });
         }
         private void RemoveEvent(int eventId)
         {
-            var existingEvent = Events.FirstOrDefault(e => e.Id == eventId);
-            if (existingEvent != null)
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                Events.Remove(existingEvent);
-            }
+                try
+                {
+                    var existingEvent = Events.FirstOrDefault(e => e.Id == eventId);
+                    if (existingEvent != null) Events.Remove(existingEvent);
 
-            var existingUserEvent = UserEvents.FirstOrDefault(e => e.Id == eventId);
-            if (existingUserEvent != null)
-            {
-                UserEvents.Remove(existingUserEvent);
-            }
+                    var existingUserEvent = UserEvents.FirstOrDefault(e => e.Id == eventId);
+                    if (existingUserEvent != null) UserEvents.Remove(existingUserEvent);
 
-            var existingPublicEvent = PublicEvents.FirstOrDefault(e => e.Id == eventId);
-            if (existingPublicEvent != null)
-            {
-                PublicEvents.Remove(existingPublicEvent);
-            }
+                    var existingPublicEvent = PublicEvents.FirstOrDefault(e => e.Id == eventId);
+                    if (existingPublicEvent != null) PublicEvents.Remove(existingPublicEvent);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error removing event: {ex.Message}");
+                }
+            });
         }
         public async Task<Event> GetEventById(int eventId)
         {
