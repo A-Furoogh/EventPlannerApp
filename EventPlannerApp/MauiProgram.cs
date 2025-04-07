@@ -9,6 +9,7 @@ using Syncfusion.Maui.Core.Hosting;
 using Microsoft.Maui.LifecycleEvents;
 using CommunityToolkit.Maui;
 using EventPlannerApp.Presentation.ViewModels;
+using Plugin.LocalNotification;
 
 namespace EventPlannerApp
 {
@@ -22,6 +23,7 @@ namespace EventPlannerApp
                 .UseMauiApp<App>()
                 .UseBarcodeReader()
                 .UseMauiCommunityToolkit()
+                .UseLocalNotification()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -46,40 +48,55 @@ namespace EventPlannerApp
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             services.AddScoped<IChatRepository, ChatRepository>();
-
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IChatService, ChatService>();
 
-            // add ViewModels
-            services.AddTransient<QrScanViewModel>();
-            services.AddTransient<QrCodeViewModel>();
-            services.AddTransient<SignupViewModel>();
-            services.AddTransient<MyEventsViewModel>();
-            services.AddTransient<ModifyEventViewModel>();
-            services.AddTransient<AddEventViewModel>();
-            services.AddTransient<AnalyticsViewModel>();
-            services.AddTransient<ChatViewModel>();
-            services.AddTransient<EventImageViewModel>();
-            services.AddTransient<EventViewModel>();
+            services.AddSingleton<NotificationService>();
 
             services.AddTransient<AddEventPage>();
-            services.AddTransient<MainPage>();
-            services.AddTransient<LoginPage>();
-            services.AddTransient<SignupPage>();
-            services.AddTransient<EventImagePage>();
-            services.AddTransient<QrCodePage>();
-            services.AddTransient<ChatsPage>();
-            services.AddTransient<AppShell>();
-            services.AddTransient<MyEventsPage>();
-            services.AddTransient<EventPage>();
-            services.AddTransient<ChatPage>();
-            services.AddTransient<QrScanPage>();
-            services.AddTransient<ModifyEventPage>();
-            services.AddTransient<AnalyticsPage>();
+            services.AddTransient<AddEventViewModel>();
 
-            
+            services.AddTransient<MainPage>();
+            services.AddTransient<MainViewModel>();
+
+            services.AddTransient<LoginPage>();
+            services.AddTransient<LoginViewModel>();
+
+            services.AddTransient<SignupPage>();
+            services.AddTransient<SignupViewModel>();
+
+            services.AddTransient<EventImagePage>();
+            services.AddTransient<EventImageViewModel>();
+
+            services.AddTransient<QrCodePage>();
+            services.AddTransient<QrCodeViewModel>();
+
+            services.AddTransient<ChatsPage>();
+            services.AddTransient<ChatsViewModel>();
+
+            services.AddTransient<AppShell>();
+
+            services.AddTransient<MyEventsPage>();
+            services.AddTransient<MyEventsViewModel>();
+
+            services.AddTransient<EventPage>();
+            services.AddTransient<EventViewModel>();
+
+            services.AddTransient<ChatPage>();
+            services.AddTransient<ChatViewModel>();
+
+            services.AddTransient<QrScanPage>();
+            services.AddTransient<QrScanViewModel>();
+
+            services.AddTransient<ModifyEventPage>();
+            services.AddTransient<ModifyEventViewModel>();
+
+            services.AddTransient<AnalyticsPage>();
+            services.AddTransient<AnalyticsViewModel>();
+
+
 
             services.AddSingleton<IServiceProvider>(provider => provider);
 

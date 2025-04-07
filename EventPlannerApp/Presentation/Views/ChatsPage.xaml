@@ -3,7 +3,10 @@
     x:Class="EventPlannerApp.Presentation.ChatsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="ChatsPage">
+    Title="ChatsPage"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels">
+    
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
             <GradientStop Offset="0.5" Color="#660066" />
@@ -31,7 +34,7 @@
             <Label
                 FontAttributes="Bold"
                 FontSize="28"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Text="Meine Chats" />
         </Frame>
 
@@ -45,17 +48,26 @@
                 Background="{StaticResource LightViolet4}"
                 Placeholder="Benutzer suchen..."
                 PlaceholderColor="WhiteSmoke"
-                SearchCommand="{Binding SearchCommand}"
-                TextChanged="OnUserSearchTextChanged"
+                Text="{Binding UserSearchText}"
+                SearchCommand="{Binding SearchUserCommand}"
+                SearchCommandParameter="{Binding Source={x:Reference UserSearchBar}, Path=Text}"
                 TextColor="WhiteSmoke"
-                WidthRequest="330" />
+                WidthRequest="330" >
+                <SearchBar.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="TextChanged"
+                        Command="{Binding SearchUserCommand}"
+                        CommandParameter="{Binding Source={x:Reference UserSearchBar}, Path=Text}" />
+                </SearchBar.Behaviors>
+            </SearchBar>
         </Border>
 
         <CollectionView
             x:Name="ChatsCollectionView"
             Grid.Row="2"
-            ItemsSource="{Binding Chats}"
-            SelectionChanged="OnChatSelected"
+            ItemsSource="{Binding UserChats}"
+            SelectionChangedCommand="{Binding ChatSelectedCommand}"
+            SelectionChangedCommandParameter="{Binding Source={x:Reference ChatsCollectionView}, Path=SelectedItem}"
             SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -109,7 +121,7 @@
         <CollectionView
             x:Name="UserSearchResults"
             Grid.Row="2"
-            IsVisible="False"
+            IsVisible="{Binding IsUserSearchResultsVisible}"
             ItemsSource="{Binding FilteredUsers}"
             SelectionMode="Single"
             VerticalOptions="Start">
@@ -126,7 +138,8 @@
                                 FontSize="18"
                                 Text="{Binding Name}" />
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer CommandParameter="{Binding}" Tapped="OnUserSelected" />
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference UserSearchResults}, Path=BindingContext.UserSelectedCommand}"
+                                    CommandParameter="{Binding .}" />
                             </Grid.GestureRecognizers>
                         </Grid>
                     </Border>
@@ -138,10 +151,10 @@
             Grid.Row="2"
             FontAttributes="Bold"
             FontSize="26"
-            HorizontalOptions="CenterAndExpand"
+            HorizontalOptions="Center"
             IsVisible="False"
             Text="Noch Kein Chat!"
-            VerticalOptions="CenterAndExpand">
+            VerticalOptions="Center">
             <Label.Triggers>
                 <DataTrigger
                     Binding="{Binding ItemsSource.Count, Source={x:Reference ChatsCollectionView}}"

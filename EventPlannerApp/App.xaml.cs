@@ -1,4 +1,5 @@
 ﻿using EventPlannerApp.Presentation;
+using EventPlannerApp.Presentation.ViewModels;
 
 namespace EventPlannerApp
 {
@@ -10,7 +11,10 @@ namespace EventPlannerApp
             InitializeComponent();
 
             _serviceProvider = serviceProvider;
-            MainPage = new NavigationPage(_serviceProvider.GetRequiredService<LoginPage>());
+            var loginViewModel = _serviceProvider.GetRequiredService<LoginViewModel>();
+            var loginPage = _serviceProvider.GetRequiredService<LoginPage>();
+            loginPage.BindingContext = loginViewModel;
+            MainPage = new NavigationPage(loginPage);
         }
     }
 }

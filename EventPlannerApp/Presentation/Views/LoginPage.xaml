@@ -4,7 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Einlogen"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels">
+    
     <ContentPage.Background>
         <LinearGradientBrush>
             <GradientStop Offset="0.5" Color="#113826" />
@@ -36,6 +38,7 @@
                     </Border.Shadow>
                     <Entry
                         x:Name="UsernameEntry"
+                        Text="{Binding Username}"
                         MaximumWidthRequest="300"
                         Placeholder="Benutzername" />
                 </Border>
@@ -46,13 +49,14 @@
                     </Border.Shadow>
                     <Entry
                         x:Name="PasswordEntry"
+                        Text="{Binding Password}"
                         IsPassword="True"
                         MaximumWidthRequest="300"
                         Placeholder="Password" />
                 </Border>
                 <Button
                     BackgroundColor="YellowGreen"
-                    Clicked="OnLoginClicked"
+                    Command="{Binding LoginCommand}"
                     FontAttributes="Bold"
                     FontSize="Medium"
                     MaximumWidthRequest="230"
@@ -63,7 +67,7 @@
                 </Button>
                 <Button
                     BackgroundColor="DarkOrange"
-                    Clicked="OnGotoSignupClicked"
+                    Command="{Binding GotoSignupCommand}"
                     FontAttributes="None"
                     FontSize="14"
                     MaximumHeightRequest="40"

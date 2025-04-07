@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EventPlannerApp.Application.Interfaces;
+using EventPlannerApp.Application.Services;
 using EventPlannerApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -59,12 +60,12 @@ namespace EventPlannerApp.Presentation.ViewModels
         {
             var eventService = _serviceProvider.GetRequiredService<IEventService>();
             int eventId = await GenerateEventId();
-            int userId = MainPage.UserId;
+            int userId = MainViewModel.UserId;
             var newEvent = new Event
             {
                 Id = eventId,
                 OrganizerId = userId,
-                Name = EventName,
+                Name = EventName ?? "",
                 Description = EventDescription ?? "",
                 Date = new DateTime(EventDate.Year,
                                 EventDate.Month,
@@ -125,6 +126,13 @@ namespace EventPlannerApp.Presentation.ViewModels
             }
 
             await eventService.CreateEvent(newEvent);
+
+            var notificationService = _serviceProvider.GetRequiredService<NotificationService>();
+            var notifyTime = newEvent.Date.AddHours(-1);
+            notificationService.ScheduleNotification("Event Erinnerung"
+                                                    , $"Ihr Event {newEvent.Name} startet in einer Stunde"
+                                                    , notifyTime);
+
             var navigationService = _serviceProvider.GetRequiredService<INavigation>();
             await navigationService.PopAsync();
         }

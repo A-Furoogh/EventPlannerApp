@@ -63,19 +63,19 @@ namespace EventPlannerApp.Presentation.ViewModels
             Feedbacks = new ObservableCollection<Feedback>(myEvent.Feedbacks?.Values.ToList() ?? new List<Feedback>());
             Rating = myEvent.Rating;
 
-            if (myEvent.ParticipantsIds.Contains(MainPage.UserId))
+            if (myEvent.ParticipantsIds.Contains(MainViewModel.UserId))
             {
                 IsJoinButtonEnabled = false;
                 JoinButtonText = "Shon Beigetreten";
             }
-            if (myEvent.OrganizerId == MainPage.UserId)
+            if (myEvent.OrganizerId == MainViewModel.UserId)
             {
                 IsEditButtonVisible = true;
                 IsEditButtonVisible = true;
             }
             if (myEvent.Feedbacks != null)
             {
-                if (myEvent.Feedbacks.Any(f => f.Value.UserId == MainPage.UserId))
+                if (myEvent.Feedbacks.Any(f => f.Value.UserId == MainViewModel.UserId))
                 {
                     IsFeedbackVisible = false;
                 }
@@ -91,7 +91,7 @@ namespace EventPlannerApp.Presentation.ViewModels
 
         private async void Join()
         {
-            if (MyEvent.ParticipantsIds.Contains(MainPage.UserId))
+            if (MyEvent.ParticipantsIds.Contains(MainViewModel.UserId))
             {
                 await App.Current.MainPage.DisplayAlert("Error", "Sie haben bereits an diesem Event teilgenommen!", "OK");
                 return;
@@ -99,7 +99,7 @@ namespace EventPlannerApp.Presentation.ViewModels
             try
             {
                 var eventService = _serviceProvider.GetRequiredService<IEventService>();
-                await eventService.AddUserToEvent(MyEvent.Id, MainPage.UserId);
+                await eventService.AddUserToEvent(MyEvent.Id, MainViewModel.UserId);
                 await App.Current.MainPage.DisplayAlert("Success", "Sie sind das Event beigetreten!", "OK");
                 IsJoinButtonEnabled = false;
                 JoinButtonText = "Shon Beigetreten";
@@ -167,7 +167,7 @@ namespace EventPlannerApp.Presentation.ViewModels
                 var eventService = _serviceProvider.GetRequiredService<IEventService>();
                 Feedback feedback = new Feedback
                 {
-                    UserId = MainPage.UserId,
+                    UserId = MainViewModel.UserId,
                     EventId = MyEvent.Id,
                     Rating = Rating,
                     Comment = Comment,

@@ -1,6 +1,7 @@
 ﻿using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
 using EventPlannerApp.Presentation;
+using EventPlannerApp.Presentation.ViewModels;
 using Firebase.Database;
 using Firebase.Database.Query;
 using System;
@@ -30,7 +31,7 @@ namespace EventPlannerApp.Infrastructure.Repositories
                 .OnceAsync<Chat>()
                 .Result
                 .Select(f => f.Object)
-                .Where(c => c.ParticipantIds.Contains(MainPage.UserId)));
+                .Where(c => c.ParticipantIds.Contains(MainViewModel.UserId)));
         }
         private void InitializeRealTimeUpdates()
         {
@@ -66,7 +67,7 @@ namespace EventPlannerApp.Infrastructure.Repositories
             //    Chats.Add(chat);
             //}
 
-            if (chat.ParticipantIds.Contains(MainPage.UserId))
+            if (chat.ParticipantIds.Contains(MainViewModel.UserId))
             {
                 var userChat = UserChats.FirstOrDefault(c => c.Id == chat.Id);
                 if (userChat != null)

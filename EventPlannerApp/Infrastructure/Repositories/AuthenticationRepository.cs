@@ -1,5 +1,6 @@
 ﻿using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
+using EventPlannerApp.Infrastructure.Helpers;
 using Firebase.Database;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ namespace EventPlannerApp.Infrastructure.Repositories
     public class AuthenticationRepository : IAuthenticationRepository
     {
         private readonly FirebaseClient _firebaseClient;
-        private readonly int _userId;
         public AuthenticationRepository(FirebaseClient firebaseClient)
         {
             _firebaseClient = firebaseClient;
@@ -21,10 +21,22 @@ namespace EventPlannerApp.Infrastructure.Repositories
         {
             var users = await _firebaseClient.Child("Users").OnceAsync<User>();
             var user = users.Where(u => u.Object.Name.ToLower() == username.ToLower()).FirstOrDefault()?.Object;
-            if (user != null && user.Password == password)
+            if (user != null)
             {
-                Preferences.Default.Set("userId", user.Id);
-                return true;
+                try
+                {
+                    var hashedPassword = user.Password;
+                    if (PasswordHelper.VerifyPassword(password, hashedPassword))
+                    {
+                        Preferences.Default.Set("userId", user.Id);
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                    throw new Exception("Einloggen Fehlgeschlagen", ex);
+                }
             }
             return false;
         }

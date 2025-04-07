@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EventPlannerApp.Application.Interfaces;
+using EventPlannerApp.Application.Services;
 using EventPlannerApp.Domain.Entities;
 
 namespace EventPlannerApp.Presentation.ViewModels
@@ -23,7 +24,6 @@ namespace EventPlannerApp.Presentation.ViewModels
         public IRelayCommand OnAnalyticsClickedCommand => new RelayCommand(OnAnalyticsClicked);
 
         private readonly IServiceProvider _serviceProvider;
-
         public MyEventsViewModel(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -38,6 +38,13 @@ namespace EventPlannerApp.Presentation.ViewModels
             {
                 UserEvents = eventService.UserEvents;
             };
+
+            var notificationService = _serviceProvider.GetRequiredService<NotificationService>();
+            foreach (var userEvent in UserEvents)
+            {
+                var notifyTime = userEvent.Date.AddHours(-1);
+                notificationService.ScheduleNotification("Event Erinnerung", $"Ihr Event {userEvent.Name} startet in einer Stunde", notifyTime);
+            }
         }
 
         private async void OnEventSelected(Event? selectedEvent) 

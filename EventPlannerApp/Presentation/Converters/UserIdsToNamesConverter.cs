@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventPlannerApp.Presentation.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace EventPlannerApp.Presentation.Converters
             {
                 try
                 {
-                    var filteredUSerids = userIds.Where(uid => uid != MainPage.UserId).ToList();
+                    var filteredUSerids = userIds.Where(uid => uid != MainViewModel.UserId).ToList();
                     var userNames = GetNamesAsync(filteredUSerids);
                     if (userNames.Result.Count == 1)
                     {
@@ -38,10 +39,10 @@ namespace EventPlannerApp.Presentation.Converters
             {
                 try
                 {
-                    if (userId == MainPage.UserId)
+                    if (userId == MainViewModel.UserId)
                         return "Sie";
 
-                    var userName = MainPage.GetUserNameAsync(userId);
+                    var userName = MainViewModel.GetUserNameAsync(userId);
                     return userName.Result;
                 }
                 catch (Exception ex)
@@ -65,7 +66,7 @@ namespace EventPlannerApp.Presentation.Converters
 
             foreach (var userId in userIds)
             {
-                var userName = await MainPage.GetUserNameAsync(userId);
+                var userName = await MainViewModel.GetUserNameAsync(userId);
                 if (!string.IsNullOrEmpty(userName))
                 {
                     userNames.Add(userName);

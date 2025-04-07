@@ -1,6 +1,7 @@
 ﻿using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
 using EventPlannerApp.Presentation;
+using EventPlannerApp.Presentation.ViewModels;
 using Firebase.Database;
 using Firebase.Database.Query;
 using System;
@@ -37,7 +38,7 @@ namespace EventPlannerApp.Infrastructure.Repositories
                 .OnceAsync<Event>()
                 .Result
                 .Select(f => f.Object)
-                .Where(e => e.ParticipantsIds != null && e.ParticipantsIds.Contains(MainPage.UserId)));
+                .Where(e => e.ParticipantsIds != null && e.ParticipantsIds.Contains(MainViewModel.UserId)));
 
             PublicEvents = new ObservableCollection<Event>(_firebaseClient
                 .Child("Events")
@@ -71,7 +72,6 @@ namespace EventPlannerApp.Infrastructure.Repositories
             {
                 try
                 {
-                    // Update Events collection
                     var existingEvent = Events.FirstOrDefault(e => e.Id == ev.Id);
                     if (existingEvent != null)
                     {
@@ -83,9 +83,8 @@ namespace EventPlannerApp.Infrastructure.Repositories
                         Events.Add(ev);
                     }
 
-                    // Update UserEvents collection
                     var existingUserEvent = UserEvents.FirstOrDefault(e => e.Id == ev.Id);
-                    bool isUserPartOfEvent = ev.ParticipantsIds?.Contains(MainPage.UserId) ?? false;
+                    bool isUserPartOfEvent = ev.ParticipantsIds?.Contains(MainViewModel .UserId) ?? false;
 
                     if (isUserPartOfEvent)
                     {
@@ -104,7 +103,6 @@ namespace EventPlannerApp.Infrastructure.Repositories
                         UserEvents.Remove(existingUserEvent);
                     }
 
-                    // Update PublicEvents collection
                     var existingPublicEvent = PublicEvents.FirstOrDefault(e => e.Id == ev.Id);
                     if (ev.IsPublic)
                     {
@@ -156,7 +154,7 @@ namespace EventPlannerApp.Infrastructure.Repositories
         }
         public async Task<IEnumerable<Event>> GetAllEvents()
         {
-            return Events;
+            return await Task.FromResult(Events);
         }
         public async Task CreateEvent(Event newEvent)
         {
@@ -174,7 +172,7 @@ namespace EventPlannerApp.Infrastructure.Repositories
         public async Task<IEnumerable<Event>> GetAllEventsByUserId(int userId)
         {
             var events = Events.Where(e => e.OrganizerId.Equals(userId));
-            return events;
+            return await Task.FromResult(events);
         }
         public async Task AddUsersToEvent(int eventId, List<int> userIds)
         {

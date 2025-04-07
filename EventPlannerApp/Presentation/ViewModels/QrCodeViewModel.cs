@@ -18,7 +18,7 @@ namespace EventPlannerApp.Presentation.ViewModels
         private readonly IServiceProvider _serviceProvider;
 
         [ObservableProperty]
-        private View _qrCodeView;
+        private View? _qrCodeView;
 
         public QrCodeViewModel(IServiceProvider serviceProvider)
         {
@@ -54,7 +54,7 @@ namespace EventPlannerApp.Presentation.ViewModels
             }
             else
             {
-                QrCodeView = null; // or handle the case where no id is set
+                QrCodeView = null;
             }
         }
     }

@@ -71,8 +71,7 @@ namespace EventPlannerApp.Presentation.ViewModels
                 {
                     await App.Current.MainPage.DisplayAlert("Erfolgreich", "Benutzer erfolgreich angelegt", "OK");
                 }
-                var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-                await navigationService.PopAsync();
+                await App.Current.MainPage.Navigation.PopAsync();
             }
             catch (Exception ex)
             {

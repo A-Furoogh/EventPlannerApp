@@ -34,7 +34,7 @@ namespace EventPlannerApp.Presentation.ViewModels
         {
             Chat = chat;
             var userService = _serviceProvider.GetRequiredService<IUserService>();
-            var partner = userService.Users.FirstOrDefault(u => chat.ParticipantIds.Contains(u.Id) && u.Id != MainPage.UserId);
+            var partner = userService.Users.FirstOrDefault(u => chat.ParticipantIds.Contains(u.Id) && u.Id != MainViewModel.UserId);
             if (partner != null)
             {
                 PartnerName = partner.Name;
@@ -59,7 +59,7 @@ namespace EventPlannerApp.Presentation.ViewModels
                 {
                     Id = chatService.GetMessages(Chat.Id).Count + 1,
                     ChatId = Chat.Id,
-                    SenderId = MainPage.UserId,
+                    SenderId = MainViewModel.UserId,
                     Content = MessageText,
                     SentAt = DateTime.Now
                 };

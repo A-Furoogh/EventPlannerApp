@@ -135,25 +135,21 @@ namespace UnitTestEventPlanner
             // Arrange
             var userId = 1;
             var userToUpdate = new User { Id = userId, Name = "User 1", Password = "www" };
-            // Simulate that the user does not exist
+
             A.CallTo(() => _fakeUserRepository.GetUserByIdAsync(userId))
                 .Returns(Task.FromResult<User>(null));
             // Act
-            // Simulate the logic that prevents UpdateUserAsync from being called
             var user = await _fakeUserRepository.GetUserByIdAsync(userId);
             if (user != null)
             {
-                // If the user exists, UpdateUserAsync should be called
                 await _fakeUserRepository.UpdateUserAsync(userToUpdate);
             }
             else
             {
-                // If the user does not exist, UpdateUserAsync should not be called
                 A.CallTo(() => _fakeUserRepository.UpdateUserAsync(userToUpdate))
                     .MustNotHaveHappened();
             }
             // Assert
-            // Verify that UpdateUserAsync was not called
             A.CallTo(() => _fakeUserRepository.UpdateUserAsync(userToUpdate))
                 .MustNotHaveHappened();
         }

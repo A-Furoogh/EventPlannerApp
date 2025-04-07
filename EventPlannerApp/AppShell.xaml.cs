@@ -21,7 +21,9 @@ namespace EventPlannerApp
 
             if (!authenticationService.IsUserAuthenticated())
             {
+                var loginViewModel = _serviceProvider.GetRequiredService<LoginViewModel>();
                 var loginPage = _serviceProvider.GetRequiredService<LoginPage>();
+                loginPage.BindingContext = loginViewModel;
                 CurrentItem = new ShellContent
                 {
                     Content = loginPage
@@ -37,8 +39,10 @@ namespace EventPlannerApp
             // Create the TabBar dynamically
             var tabBar = new TabBar();
 
-            // Add MainPage tab
+            // MainPage-Tab
+            var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
             var mainPage = _serviceProvider.GetRequiredService<MainPage>();
+            mainPage.BindingContext = mainViewModel;
             var mainShellContent = new ShellContent
             {
                 Title = "Home",
@@ -48,8 +52,10 @@ namespace EventPlannerApp
             tabBar.Items.Add(mainShellContent);
             Console.WriteLine("MainPage added to TabBar.");
 
-            // Add ChatsPage tab
+            // ChatsPage-Tab
+            var chatsViewModel = _serviceProvider.GetRequiredService<ChatsViewModel>();
             var chatsPage = _serviceProvider.GetRequiredService<ChatsPage>();
+            chatsPage.BindingContext = chatsViewModel;
             var ShatsShellContent = new ShellContent
             {
                 Title = "Chats",
@@ -59,7 +65,7 @@ namespace EventPlannerApp
             tabBar.Items.Add(ShatsShellContent);
             Console.WriteLine("ChatsPage added to TabBar.");
 
-            // add MyEventsPage tab
+            // MyEventsPage-Tab
             var myEventsPage = _serviceProvider.GetRequiredService<MyEventsPage>();
             var myEventsViewModel = _serviceProvider.GetRequiredService<MyEventsViewModel>();
             myEventsPage.BindingContext = myEventsViewModel;

@@ -1,5 +1,6 @@
 ﻿using EventPlannerApp.Application.Interfaces;
 using EventPlannerApp.Domain.Entities;
+using EventPlannerApp.Infrastructure.Helpers;
 using Firebase.Database;
 using Firebase.Database.Query;
 using System;
@@ -88,8 +89,10 @@ namespace EventPlannerApp.Infrastructure.Repositories
                 var users = await _firebaseClient.Child("Users").OnceAsync<User>();
                 if (users.Any(u => u.Object.Name == user.Name))
                 {
-                    throw new Exception("Benutzername is schon benutzt! Versuchen Sie mit einem anderen Benutzernamen");
+                    throw new Exception("Benutzername ist schon benutzt! Versuchen Sie mit einem anderen Benutzernamen");
                 }
+                var hashedPassword = PasswordHelper.HashPassword(user.Password);
+                user.Password = hashedPassword;
                 await _firebaseClient.Child("Users").Child(user.Id.ToString()).PutAsync(user);
             }
             catch (Exception ex)

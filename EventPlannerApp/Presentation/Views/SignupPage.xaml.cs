@@ -6,10 +6,11 @@ namespace EventPlannerApp.Presentation;
 
 public partial class SignupPage : ContentPage
 {
-    public SignupPage(SignupViewModel viewModel)
+    private readonly IServiceProvider _serviceProvider;
+    public SignupPage(IServiceProvider serviceProvider)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        _serviceProvider = serviceProvider;
     }
     private async void OnProfileImageTapped(object sender, EventArgs e)
     {

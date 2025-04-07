@@ -3,14 +3,16 @@
     x:Class="EventPlannerApp.Presentation.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Background="{StaticResource LightViolet2}">
+    Background="{StaticResource LightViolet2}"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:EventPlannerApp.Presentation.ViewModels">
 
     <Shell.TitleView>
         <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="Center">
             <ImageButton
                 x:Name="LogOutButton"
                 BackgroundColor="Transparent"
-                Clicked="OnLogOutButton_Clicked"
+                Command="{Binding LogoutCommand}"
                 HeightRequest="30"
                 Source="settings_icon.png"
                 WidthRequest="30" />
@@ -39,17 +41,24 @@
                 StrokeShape="RoundRectangle 20">
                 <SearchBar
                     x:Name="EventSearchBar"
+                    Text="{Binding EventSearchText}"
                     Background="{StaticResource LightViolet3}"
                     Placeholder="Event suchen..."
                     PlaceholderColor="WhiteSmoke"
-                    SearchCommand="{Binding SearchCommand}"
-                    TextChanged="OnEventSearchTextChanged"
+                    SearchCommand="{Binding SearchEventCommand}"
                     TextColor="WhiteSmoke"
-                    WidthRequest="330" />
+                    WidthRequest="330">
+                    <SearchBar.Behaviors>
+                        <toolkit:EventToCommandBehavior
+                            EventName="TextChanged"
+                            Command="{Binding SearchEventCommand}"
+                            CommandParameter="{Binding Source={x:Reference EventSearchBar}, Path=Text}" />
+                    </SearchBar.Behaviors>
+                </SearchBar>
             </Border>
             <ImageButton
                 BackgroundColor="Transparent"
-                Clicked="OnQrSearchButton_Clicked"
+                Command="{Binding QrSearchCommand}"
                 HeightRequest="50"
                 Source="qr_icon.png"
                 WidthRequest="50" />
@@ -58,10 +67,11 @@
 
             <CollectionView MaximumHeightRequest="550"
                 x:Name="EventsCollectionView"
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="Fill"
                 HorizontalScrollBarVisibility="Never"
                 ItemsSource="{Binding FilteredEvents}"
-                SelectionChanged="OnEventSelected"
+                SelectionChangedCommand="{Binding EventSelectedCommand}"
+                SelectionChangedCommandParameter="{Binding Source={x:Reference EventsCollectionView}, Path=SelectedItem}"
                 SelectionMode="Single">
 
                 <CollectionView.ItemsLayout>
@@ -157,13 +167,13 @@
             Grid.Row="2"
             Margin="10,10,10,10"
             Padding="10,10,10,10"
-            Clicked="OnAddEvent_Clicked"
+            Command="{Binding AddEventCommand}"
             CornerRadius="10"
             FontSize="20"
-            HorizontalOptions="FillAndExpand"
+            HorizontalOptions="Fill"
             Text="Neues Event"
             TextColor="White"
-            VerticalOptions="CenterAndExpand">
+            VerticalOptions="Center">
             <Button.Background>
                 <LinearGradientBrush StartPoint="1,1" EndPoint="1,1">
                     <GradientStop Offset="0.1" Color="#003300" />
